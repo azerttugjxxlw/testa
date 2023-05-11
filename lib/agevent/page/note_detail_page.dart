@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:testa/db/notes_database.dart';
 
+import '../../constants.dart';
+import '../db/notes_database.dart';
 import '../model/note.dart';
 import 'edit_note_page.dart';
 
@@ -39,9 +40,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          actions: [editButton(), deleteButton()],
-        ),
+        appBar:Appbare('',actions: [editButton(), deleteButton()],),
         body: isLoading
             ? Center(child: CircularProgressIndicator())
             : Padding(
@@ -50,23 +49,34 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   children: [
                     Text(
-                      note.title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      DateFormat.yMMMd().format(note.createdTime),
+                      style: kDetail,
                     ),
                     SizedBox(height: 8),
+
                     Text(
-                      DateFormat.yMMMd().format(note.createdTime),
-                      style: TextStyle(color: Colors.white38),
+                      note.timedebut.toIso8601String(),
+                      style: kDetail
                     ),
+                    Text(
+                      note.timefin.toIso8601String(),
+                      style: kDetail
+                    ),
+
+                    SizedBox(height: 8),
+                    Text(
+                      note.title,
+                      style: kDetail
+                    ),
+
+
                     SizedBox(height: 8),
                     Text(
                       note.description,
-                      style: TextStyle(color: Colors.white70, fontSize: 18),
-                    )
+                      style: kDetail,
+                    ),
+
+
                   ],
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../constants.dart';
 import '../db/notes_database.dart';
 import '../model/note.dart';
 import '../widget/note_card_widget.dart';
@@ -22,13 +23,15 @@ class _NotesPageState extends State<NotesPage> {
 
     refreshNotes();
   }
-
-  @override
+  //il ferme la base de donner
+ /* @override
   void dispose() {
-    NotesDatabase.instance.close();
+
+    NotesDatabase?.instance.close();
 
     super.dispose();
-  }
+  }*/
+
 
   Future refreshNotes() async {
     setState(() => isLoading = true);
@@ -40,26 +43,20 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Notes',
-            style: TextStyle(fontSize: 24),
-          ),
-          actions: [Icon(Icons.search), SizedBox(width: 12)],
-        ),
+        appBar:Appbare('Agenda', actions: []),
         body: Center(
           child: isLoading
               ? CircularProgressIndicator()
               : notes.isEmpty
                   ? Text(
-                      'No Notes',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
+                      'pas Notes',
+                      style: kLabelTextStyle,
                     )
                   : buildNotes(),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: Icon(Icons.add),
+          backgroundColor: Colors.lightBlue.shade900,
+          child: Icon(Icons.add,color: Colors.white,),
           onPressed: () async {
             await Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => AddEditNotePage()),
@@ -84,11 +81,13 @@ class _NotesPageState extends State<NotesPage> {
             onTap: () async {
               await Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => NoteDetailPage(noteId: note.id!),
+
               ));
 
               refreshNotes();
             },
             child: NoteCardWidget(note: note, index: index),
+
           );
         },
       );

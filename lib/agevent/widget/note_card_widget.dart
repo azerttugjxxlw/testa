@@ -13,7 +13,7 @@ final _lightColors = [
 ];
 
 class NoteCardWidget extends StatelessWidget {
-  NoteCardWidget({
+ const NoteCardWidget({
     Key? key,
     required this.note,
     required this.index,
@@ -42,6 +42,25 @@ class NoteCardWidget extends StatelessWidget {
               time,
               style: TextStyle(color: Colors.grey.shade700),
             ),
+            SizedBox(height: 4),
+            Text(
+              note.timedebut.toIso8601String(),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+           note.timefin.toIso8601String(),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 4),
+
             SizedBox(height: 4),
             Text(
               note.title,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
 import '../db/notes_database.dart';
 import '../model/note.dart';
 import '../widget/note_form_widget.dart';
@@ -22,6 +23,8 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   late int number;
   late String title;
   late String description;
+  late DateTime timefin;
+  late DateTime timedebut;
 
   @override
   void initState() {
@@ -31,13 +34,14 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     number = widget.note?.number ?? 0;
     title = widget.note?.title ?? '';
     description = widget.note?.description ?? '';
+    timefin =widget.note?.timefin ?? DateTime.now();//timefin changer
+    timedebut =widget.note?.timedebut ?? DateTime.now();
+
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          actions: [buildButton()],
-        ),
+        appBar: Appbare('',actions: [buildButton()],),
         body: Form(
           key: _formKey,
           child: NoteFormWidget(
@@ -45,18 +49,22 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
             number: number,
             title: title,
             description: description,
-            onChangedImportant: (isImportant) =>
-                setState(() => this.isImportant = isImportant),
+            timefin: timefin,
+            timedebut: timedebut,
+
+            onChangedImportant: (isImportant) => setState(() => this.isImportant = isImportant),
             onChangedNumber: (number) => setState(() => this.number = number),
             onChangedTitle: (title) => setState(() => this.title = title),
-            onChangedDescription: (description) =>
-                setState(() => this.description = description),
+            onChangedTimefin: (timefin)=> setState(() =>this.timefin=timefin as DateTime),
+            onChangedTimedebut: (timedebut)=> setState(() =>this.timedebut=timedebut as DateTime),
+            onChangedDescription: (description) => setState(() => this.description = description),
+
           ),
         ),
       );
 
   Widget buildButton() {
-    final isFormValid = title.isNotEmpty && description.isNotEmpty;
+    final isFormValid = title.isNotEmpty && description.isNotEmpty && timefin.toIso8601String().isNotEmpty && timedebut.toIso8601String().isNotEmpty ;
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -93,6 +101,10 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       number: number,
       title: title,
       description: description,
+      timefin: timefin,
+      timedebut: timedebut,
+
+
     );
 
     await NotesDatabase.instance.update(note);
@@ -105,6 +117,9 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       number: number,
       description: description,
       createdTime: DateTime.now(),
+      timefin: timefin,
+      timedebut: timedebut,
+
     );
 
     await NotesDatabase.instance.create(note);

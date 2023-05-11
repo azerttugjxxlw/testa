@@ -30,6 +30,8 @@ class NotesDatabase {
     final boolType = 'BOOLEAN NOT NULL';
     final integerType = 'INTEGER NOT NULL';
 
+
+
     await db.execute('''
 CREATE TABLE $tableNotes ( 
   ${NoteFields.id} $idType, 
@@ -37,7 +39,9 @@ CREATE TABLE $tableNotes (
   ${NoteFields.number} $integerType,
   ${NoteFields.title} $textType,
   ${NoteFields.description} $textType,
-  ${NoteFields.time} $textType
+  ${NoteFields.time} $textType,
+  ${NoteFields.timefin} $textType,
+  ${NoteFields.timedebut} $textType
   )
 ''');
   }
@@ -78,6 +82,8 @@ CREATE TABLE $tableNotes (
     final db = await instance.database;
 
     final orderBy = '${NoteFields.time} ASC';
+
+
     // final result =
     //     await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
 
