@@ -1,3 +1,4 @@
+import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fast_forms/flutter_fast_forms.dart';
 
@@ -12,7 +13,7 @@ class NoteFormWidget extends StatelessWidget {
   final bool? isImportant;
   final int? number;
   final String? title;
-  final DateTime? timefin;
+  late final DateTime? timefin;
   final DateTime? timedebut;
   //date de fin
   final String? description;
@@ -106,7 +107,20 @@ class NoteFormWidget extends StatelessWidget {
       );
 
 
-  Widget  buildTimedebut()=>  FastDateRangePicker(
+  Widget  buildTimedebut()=> DateRangeField(
+      firstDate: DateTime(1990),
+      enabled: true,
+      initialValue: DateTimeRange(
+          start: DateTime.now(),
+          end: DateTime.now().add(Duration(days: 5))),
+      decoration: InputDecoration(
+        labelText: 'Date Range',
+        prefixIcon: Icon(Icons.date_range),
+        hintText: 'Please select a start and end date',
+        border: OutlineInputBorder(),
+      ),
+      validator: (timedebut) => timedebut == null && timedebut.toString().isEmpty?'ho':null,
+      onChanged: onChangedTimedebut); /*FastDateRangePicker(
     name: 'timedebut',
     labelText: 'Date Range Picker',
     // initialValue: DateTime.now(),
@@ -114,11 +128,11 @@ class NoteFormWidget extends StatelessWidget {
       //hintText: timefin,
         hintStyle: TextStyle(color: Colors.black)
     ),
-    validator: (timedebut)=> timedebut == null  ?  'fin' : null, onChanged:onChangedTimedebut,
+    validator: (timedebut)=> timedebut == null && timedebut.toString().isEmpty ?  'fin' : null, onChanged:onChangedTimedebut,
 
     firstDate: DateTime(1970),
     lastDate: DateTime(2040),
-  );
+  );*/
   Widget  buildTimefin()=> FastDateRangePicker(
     name: 'date_range_picker',
     labelText: 'Date Range Picker',
@@ -127,7 +141,8 @@ class NoteFormWidget extends StatelessWidget {
      //hintText: timefin,
      hintStyle: TextStyle(color: Colors.black)
    ),
-   validator: (timefin)=> timefin == null  ?  'fin' : null, onChanged: onChangedTimefin,
+   validator: (timefin)=> timefin == null && timefin.toString().isEmpty
+       ?  'fin' : null, onChanged: onChangedTimefin,
     firstDate: DateTime(1970),
     lastDate: DateTime(2040),
   );/* TextFormField(

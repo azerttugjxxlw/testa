@@ -56,7 +56,11 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
             onChangedNumber: (number) => setState(() => this.number = number),
             onChangedTitle: (title) => setState(() => this.title = title),
             onChangedTimefin: (timefin)=> setState(() =>this.timefin=timefin as DateTime),
-            onChangedTimedebut: (timedebut)=> setState(() =>this.timedebut=timedebut as DateTime),
+            onChangedTimedebut:  (timedebut) {
+              setState(() {
+                this.timedebut = timedebut as DateTime ;
+              });
+            },
             onChangedDescription: (description) => setState(() => this.description = description),
 
           ),
@@ -64,7 +68,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       );
 
   Widget buildButton() {
-    final isFormValid = title.isNotEmpty && description.isNotEmpty && timefin.toIso8601String().isNotEmpty && timedebut.toIso8601String().isNotEmpty ;
+    final isFormValid = title.isNotEmpty && description.isNotEmpty && timefin.toString().isNotEmpty && timedebut.toString().isNotEmpty ;
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
